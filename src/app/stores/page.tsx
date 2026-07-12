@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient, useSession } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
+import { useSessionGate } from "@/lib/use-session-gate";
 import styles from "./stores.module.css";
 
 type Store = {
@@ -17,16 +18,9 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function StoresPage() {
   const router = useRouter();
-  const { data: session, isPending } = useSession();
+  const { session, isPending } = useSessionGate({ unauthedRedirect: "/login" });
   const [stores, setStores] = useState<Store[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  // Gate: once the session state resolves, bounce unauthenticated visitors.
-  useEffect(() => {
-    if (!isPending && !session) {
-      router.replace("/login");
-    }
-  }, [isPending, session, router]);
 
   // Fetch stores from the backend once we know we're authenticated.
   useEffect(() => {
