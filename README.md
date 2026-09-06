@@ -16,6 +16,8 @@ Before running this app, start the backend in a sibling checkout:
 ```bash
 cd ../aqua-life-backend
 docker compose up -d   # starts Postgres (and any other backend dependencies)
+npm run db:migrate      # applies database migrations
+npm run seed:admin      # seeds the admin login (reads ADMIN_EMAIL/ADMIN_PASSWORD from its .env)
 npm run dev             # starts the API on http://localhost:3000
 ```
 

@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { merchantsApi } from "@/lib/api-client";
+import { storesQueryKey } from "@/features/stores/use-stores";
 import type { CreateMerchantInput, UpdateMerchantInput } from "./types";
 
 export const merchantsQueryKey = ["merchants"] as const;
@@ -40,6 +41,7 @@ export function useDeleteMerchant() {
     mutationFn: (id: string) => merchantsApi.remove(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: merchantsQueryKey });
+      queryClient.invalidateQueries({ queryKey: storesQueryKey });
     },
   });
 }

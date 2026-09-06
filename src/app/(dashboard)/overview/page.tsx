@@ -25,6 +25,8 @@ export default function OverviewPage() {
           <Card.Content>
             {merchants.isLoading ? (
               <Spinner size="sm" aria-label="Loading merchants" />
+            ) : merchants.isError ? (
+              <p className="text-sm text-danger">Failed to load merchants</p>
             ) : (
               <p className="text-3xl font-semibold text-foreground">
                 {merchants.data?.length ?? 0}
@@ -40,6 +42,8 @@ export default function OverviewPage() {
           <Card.Content>
             {stores.isLoading ? (
               <Spinner size="sm" aria-label="Loading stores" />
+            ) : stores.isError ? (
+              <p className="text-sm text-danger">Failed to load stores</p>
             ) : (
               <p className="text-3xl font-semibold text-foreground">
                 {stores.data?.length ?? 0}
@@ -55,7 +59,9 @@ export default function OverviewPage() {
           <Card.Description>Most recently added stores</Card.Description>
         </Card.Header>
         <Card.Content>
-          {recentStores.length === 0 ? (
+          {stores.isError ? (
+            <p className="text-sm text-danger">Failed to load stores</p>
+          ) : recentStores.length === 0 ? (
             <p className="text-sm text-muted">No stores yet.</p>
           ) : (
             <ul className="flex flex-col gap-2">
