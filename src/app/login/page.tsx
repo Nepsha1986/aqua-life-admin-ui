@@ -22,7 +22,7 @@ export default function LoginPage() {
       setError(error.message ?? "Sign in failed");
       return;
     }
-    router.push("/stores");
+    router.push("/overview");
   }
 
   return (
